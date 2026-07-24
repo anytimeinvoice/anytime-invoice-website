@@ -95,9 +95,13 @@ img, svg { max-width: 100%; display: block; }
 .nav-mobile-toggle { display: none; }
 
 /* ── Hero ────────────────────────────────────────────────────────────── */
-.hero { padding: var(--space-20) 0; text-align: center; background: linear-gradient(180deg, var(--brand-teal-soft), var(--white) 60%); }
-.hero h1 { font-size: var(--text-5xl); max-width: 44rem; margin: 0 auto var(--space-6); }
-.hero .lede { font-size: var(--text-xl); max-width: 36rem; margin: 0 auto var(--space-8); }
+/* Matches the real, live app.anytimeinvoice.com landing page (F48):
+   centered logo above the heading, plain white background, blue accent. */
+.hero { padding: var(--space-20) 0; text-align: center; background: var(--white); }
+.hero-logo { height: 3.5rem; width: auto; margin: 0 auto var(--space-8); }
+.hero h1 { font-size: var(--text-4xl); max-width: 40rem; margin: 0 auto var(--space-6); }
+.hero .accent { color: var(--brand-blue); }
+.hero .lede { font-size: var(--text-lg); max-width: 34rem; margin: 0 auto var(--space-8); }
 .hero-actions { display: flex; gap: var(--space-4); justify-content: center; flex-wrap: wrap; }
 
 /* ── Buttons ─────────────────────────────────────────────────────────── */
@@ -108,8 +112,6 @@ img, svg { max-width: 100%; display: block; }
 }
 .btn-primary { background: var(--brand-blue); color: var(--white); }
 .btn-primary:hover { background: var(--brand-blue-hover); }
-.btn-teal { background: var(--brand-teal); color: var(--white); }
-.btn-teal:hover { background: var(--brand-teal-hover); }
 .btn-ghost { background: var(--white); color: var(--brand-ink); border: 1px solid var(--slate-300); }
 .btn-ghost:hover { border-color: var(--slate-500); }
 
@@ -122,26 +124,28 @@ section { padding: var(--space-16) 0; }
 .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-8); align-items: center; }
 
 .card {
-  background: var(--white); border: 1px solid var(--slate-200); border-radius: var(--radius-lg);
-  padding: var(--space-8); box-shadow: var(--shadow-sm);
+  background: var(--white); border: 1px solid var(--slate-200); border-radius: var(--radius-xl);
+  padding: var(--space-8);
 }
-.card h3 { font-size: var(--text-lg); margin-bottom: var(--space-2); }
-.card .icon { width: 2.5rem; height: 2.5rem; border-radius: var(--radius-md); background: var(--brand-teal-soft); color: var(--brand-teal); display: flex; align-items: center; justify-content: center; font-size: var(--text-xl); margin-bottom: var(--space-4); }
+.card h3 { font-size: var(--text-lg); margin-bottom: var(--space-2); text-align: center; }
+.card p { text-align: center; }
+.card .icon {
+  width: 3rem; height: 3rem; border-radius: 9999px; background: var(--brand-blue-soft); color: var(--brand-blue);
+  display: flex; align-items: center; justify-content: center; font-size: var(--text-xl);
+  margin: 0 auto var(--space-4);
+}
 
 /* ── Pricing ─────────────────────────────────────────────────────────── */
-.pricing-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-8); max-width: 46rem; margin: 0 auto; }
-.price-card { border: 1px solid var(--slate-200); border-radius: var(--radius-xl); padding: var(--space-8); }
-.price-card.featured { border-color: var(--brand-teal); box-shadow: var(--shadow-lg); position: relative; }
-.price-card.featured::before {
-  content: "Most popular"; position: absolute; top: -0.75rem; left: 50%; transform: translateX(-50%);
-  background: var(--brand-teal); color: var(--white); font-size: var(--text-sm); font-weight: 600;
-  padding: 0.25rem 0.875rem; border-radius: 9999px;
-}
+/* Matches the real F48 pricing cards: plain bordered Free card, Pro card
+   gets a tinted-blue background + blue ring (not a teal border). */
+.pricing-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-6); max-width: 46rem; margin: 0 auto; }
+.price-card { border: 1px solid var(--slate-200); border-radius: var(--radius-xl); padding: var(--space-8); background: var(--white); }
+.price-card.featured { border: 1px solid var(--brand-blue); background: var(--brand-blue-soft); box-shadow: 0 0 0 1px var(--brand-blue); }
 .price-amount { font-size: var(--text-4xl); font-weight: 700; color: var(--brand-ink); margin: var(--space-4) 0; }
 .price-amount span { font-size: var(--text-base); font-weight: 500; color: var(--slate-500); }
 .price-features { list-style: none; padding: 0; margin: var(--space-6) 0; }
 .price-features li { padding: 0.375rem 0; padding-left: 1.5rem; position: relative; color: var(--slate-600); font-size: var(--text-sm); }
-.price-features li::before { content: "✓"; position: absolute; left: 0; color: var(--brand-teal); font-weight: 700; }
+.price-features li::before { content: "✓"; position: absolute; left: 0; color: #10b981; font-weight: 700; }
 
 /* ── CTA band ────────────────────────────────────────────────────────── */
 .cta-band { background: var(--brand-ink); color: var(--white); text-align: center; border-radius: var(--radius-xl); padding: var(--space-16) var(--space-8); }
