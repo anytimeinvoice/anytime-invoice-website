@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 350 100" width="350" height="100" fill="none">
+
+  <g transform="translate(10, 15) scale(0.7)">
+
+    <path d="M 50 15 A 35 35 0 1 0 85 50" stroke="#0f172a" stroke-width="8" stroke-linecap="round"></path>
+
+    <path d="M 35 50 L 50 65 L 85 25" stroke="#0d9488" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"></path>
+  </g>
+
+
+  <text x="90" y="58" font-family="Inter, system-ui, sans-serif" font-size="34" font-weight="700" fill="#0f172a">Anytime</text>
+  <text x="238" y="58" font-family="Inter, system-ui, sans-serif" font-size="34" font-weight="300" fill="#0f172a">Invoice</text>
+</svg>
