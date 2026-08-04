@@ -104,6 +104,16 @@ img, svg { max-width: 100%; display: block; }
 .hero .lede { font-size: var(--text-lg); max-width: 34rem; margin: 0 auto var(--space-8); }
 .hero-actions { display: flex; gap: var(--space-4); justify-content: center; flex-wrap: wrap; }
 
+/* Full-width photo hero (home page) */
+.hero-photo {
+  position: relative;
+  padding: var(--space-20) 0;
+  background: linear-gradient(rgba(15, 23, 42, 0.6), rgba(15, 23, 42, 0.6)), url('photos/hero-ladder.webp') center/cover no-repeat;
+  color: var(--white);
+}
+.hero-photo h1, .hero-photo .lede { color: var(--white); }
+.hero-photo .accent { color: #93c5fd; }
+
 /* ── Buttons ─────────────────────────────────────────────────────────── */
 .btn {
   display: inline-flex; align-items: center; justify-content: center;
