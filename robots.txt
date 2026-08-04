@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://anytimeinvoice.com/sitemap.xml
+Sitemap: https://anytimeinvoice.com.au/sitemap.xml

@@ -1,0 +1,66 @@
+name: Deploy Prod
+
+# Production deploy for the marketing site — always from `master`, always
+# HUMAN-dispatched (mirrors the app repo's ADR-0006 human-gate). Agents may
+# prepare the dev -> master release PR but must never dispatch this
+# workflow. No DB, no workers, no separate promote-from-preview step: this
+# is a static site with no build step, so a fresh `vercel deploy --prod`
+# rebuild is cheap and side-effect-free — unlike the app repo, there's no
+# reason to promote an already-built preview instead of just rebuilding.
+#
+# `vercel deploy --prod` aliases to whichever domains are configured as this
+# project's Production target (www.anytimeinvoice.com and the apex
+# anytimeinvoice.com) — neither is pinned to a git branch, so no explicit
+# `vercel alias` step is needed here.
+
+on:
+  workflow_dispatch: {}
+
+jobs:
+  guard:
+    name: Guard — must dispatch from master
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Verify ref is master
+        env:
+          REF: ${{ github.ref }}
+        run: |
+          if [ "$REF" != "refs/heads/master" ]; then
+            echo "::error::Production deploys must be dispatched from master (got '$REF'). Merge dev -> master first, then re-run this workflow with master selected as the branch."
+            exit 1
+          fi
+          echo "Guard passed: dispatched from master"
+
+  deploy:
+    name: Deploy to production
+    runs-on: ubuntu-latest
+    needs: guard
+    timeout-minutes: 10
+    environment: Production
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: master
+
+      - name: Deploy to Vercel (production)
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: team_uR3MOby3IAOOdmZCWSaP0eFg
+        run: |
+          npx vercel deploy --prod --yes --token="$VERCEL_TOKEN" --scope "$VERCEL_ORG_ID" --project anytime-invoice-website
+
+      - name: Verify production is live
+        run: |
+          for i in $(seq 1 12); do
+            CODE=$(curl -s -o /dev/null -w "%{http_code}" https://www.anytimeinvoice.com/)
+            if [ "$CODE" = "200" ]; then
+              echo "www.anytimeinvoice.com is live (200)"
+              exit 0
+            fi
+            echo "Got HTTP $CODE — retry $i/12 in 10s…"
+            sleep 10
+          done
+          echo "::error::www.anytimeinvoice.com did not return 200 within the timeout."
+          exit 1

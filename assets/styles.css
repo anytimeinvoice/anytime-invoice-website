@@ -51,6 +51,37 @@
   --shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.08), 0 2px 4px -2px rgba(15, 23, 42, 0.06);
   --shadow-lg: 0 10px 15px -3px rgba(15, 23, 42, 0.10), 0 4px 6px -4px rgba(15, 23, 42, 0.05);
   --container-max: 72rem;
+
+  /* Semantic theme tokens — DARK is the default appearance (site-wide
+     decision, not tied to OS preference). Light mode is opt-out only, via
+     the toggle setting data-theme="light" (persisted to localStorage).
+     --white/--brand-ink/etc. above stay their literal colors always,
+     since several rules (button text on blue, headline text over photos,
+     the CTA band's own dark background) depend on them NOT changing when
+     the page theme flips. --on-dark is the fixed-white counterpart for
+     exactly those cases. */
+  --surface: #0f172a;
+  --surface-alt: #1e293b;
+  --heading: #f1f5f9;
+  --text: #cbd5e1;
+  --text-strong: #e2e8f0;
+  --text-muted: #94a3b8;
+  --border: #334155;
+  --nav-bg: rgba(15, 23, 42, 0.85);
+  --icon-soft: #1e3a5f;
+  --on-dark: #ffffff;
+}
+
+:root[data-theme="light"] {
+  --surface: var(--white);
+  --surface-alt: var(--slate-50);
+  --heading: var(--brand-ink);
+  --text: var(--slate-600);
+  --text-strong: var(--slate-800);
+  --text-muted: var(--slate-500);
+  --border: var(--slate-200);
+  --nav-bg: rgba(255, 255, 255, 0.9);
+  --icon-soft: var(--brand-blue-soft);
 }
 
 * { box-sizing: border-box; }
@@ -58,13 +89,13 @@ html { scroll-behavior: smooth; }
 body {
   margin: 0;
   font-family: var(--font-sans);
-  color: var(--slate-800);
-  background: var(--white);
+  color: var(--text-strong);
+  background: var(--surface);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
 }
-h1, h2, h3 { color: var(--brand-ink); line-height: 1.25; letter-spacing: -0.02em; margin: 0 0 var(--space-4); }
-p { margin: 0 0 var(--space-4); color: var(--slate-600); }
+h1, h2, h3 { color: var(--heading); line-height: 1.25; letter-spacing: -0.02em; margin: 0 0 var(--space-4); }
+p { margin: 0 0 var(--space-4); color: var(--text); }
 a { color: var(--brand-blue); text-decoration: none; }
 img, svg { max-width: 100%; display: block; }
 
@@ -72,37 +103,94 @@ img, svg { max-width: 100%; display: block; }
 
 /* ── Nav ─────────────────────────────────────────────────────────────── */
 .nav {
-  border-bottom: 1px solid var(--slate-200);
+  border-bottom: 1px solid var(--border);
   position: sticky;
   top: 0;
-  background: rgba(255, 255, 255, 0.9);
+  background: var(--nav-bg);
   backdrop-filter: blur(8px);
   z-index: 10;
 }
 .nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 4.5rem; }
-.nav-logo { height: 2.25rem; width: auto; }
+.nav-logo { height: 2.75rem; width: auto; color: var(--heading); }
+.nav-logo .logo-ring { stroke: #ffffff; }
+:root[data-theme="light"] .nav-logo .logo-ring { stroke: currentColor; }
 .nav-links { display: flex; align-items: center; gap: var(--space-8); list-style: none; margin: 0; padding: 0; }
-.nav-links a { color: var(--slate-800); font-weight: 500; font-size: var(--text-sm); }
+.nav-links a { color: var(--text-strong); font-weight: 500; font-size: var(--text-sm); }
 .nav-links a:hover { color: var(--brand-blue); }
 .nav-cta {
   background: var(--brand-blue);
-  color: var(--white) !important;
+  color: var(--on-dark) !important;
   padding: 0.5rem 1.25rem;
   border-radius: var(--radius-md);
   font-weight: 600;
 }
 .nav-cta:hover { background: var(--brand-blue-hover); }
 .nav-mobile-toggle { display: none; }
+.theme-toggle {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 2.25rem; height: 2.25rem; border-radius: var(--radius-md);
+  border: 1px solid var(--border); background: transparent; color: var(--text-strong);
+  cursor: pointer;
+}
+.theme-toggle:hover { border-color: var(--brand-blue); color: var(--brand-blue); }
+.theme-toggle .icon-sun { display: none; }
+.theme-toggle .icon-moon { display: block; }
+:root[data-theme="light"] .theme-toggle .icon-sun { display: block; }
+:root[data-theme="light"] .theme-toggle .icon-moon { display: none; }
 
 /* ── Hero ────────────────────────────────────────────────────────────── */
-/* Matches the real, live app.anytimeinvoice.com landing page (F48):
+/* Matches the real, live app.anytimeinvoice.com.au landing page (F48):
    centered logo above the heading, plain white background, blue accent. */
-.hero { padding: var(--space-20) 0; text-align: center; background: var(--white); }
+.hero { padding: var(--space-20) 0; text-align: center; background: var(--surface); }
 .hero-logo { height: 3.5rem; width: auto; margin: 0 auto var(--space-8); }
 .hero h1 { font-size: var(--text-4xl); max-width: 40rem; margin: 0 auto var(--space-6); }
 .hero .accent { color: var(--brand-blue); }
 .hero .lede { font-size: var(--text-lg); max-width: 34rem; margin: 0 auto var(--space-8); }
 .hero-actions { display: flex; gap: var(--space-4); justify-content: center; flex-wrap: wrap; }
+
+/* Full-width photo hero (any page) */
+.hero-photo {
+  position: relative;
+  padding: var(--space-20) 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: var(--on-dark);
+}
+.hero-photo h1, .hero-photo .lede { color: var(--on-dark); }
+.hero-photo .accent { color: #93c5fd; }
+.home-hero-photo { background-image: linear-gradient(rgba(15, 23, 42, 0.6), rgba(15, 23, 42, 0.6)), url('photos/hero-ladder.webp'); }
+.pricing-hero-photo { background-image: linear-gradient(rgba(15, 23, 42, 0.55), rgba(15, 23, 42, 0.55)), url('photos/pricing-band.webp'); }
+
+/* Full-width photo section backgrounds (reused pattern from .hero-photo) */
+.section-photo-bg {
+  padding: var(--space-20) 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: var(--on-dark);
+}
+.section-photo-bg.quote-to-paid-bg {
+  background-image: linear-gradient(rgba(15, 23, 42, 0.6), rgba(15, 23, 42, 0.6)), url('photos/quote-to-paid.webp');
+}
+.section-photo-bg .section-eyebrow, .section-photo-bg h2, .section-photo-bg p { color: var(--on-dark); }
+.quote-to-paid-bg h2 { font-size: var(--text-3xl); }
+.quote-to-paid-bg p { font-size: var(--text-lg); }
+
+.full-photo-bg {
+  min-height: 20rem;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* "Window" effect: background stays fixed while content scrolls over it,
+   like looking through a window. Degrades gracefully to a normal cover
+   background on iOS Safari, which doesn't support fixed attachment. */
+.about-complexity-bg {
+  background-image: url('photos/about-complexity.webp');
+  background-attachment: fixed;
+}
 
 /* ── Buttons ─────────────────────────────────────────────────────────── */
 .btn {
@@ -110,8 +198,12 @@ img, svg { max-width: 100%; display: block; }
   padding: 0.75rem 1.75rem; border-radius: var(--radius-md);
   font-weight: 600; font-size: var(--text-base); border: none; cursor: pointer;
 }
-.btn-primary { background: var(--brand-blue); color: var(--white); }
+.btn-primary { background: var(--brand-blue); color: var(--on-dark); }
 .btn-primary:hover { background: var(--brand-blue-hover); }
+/* Intentionally NOT theme-aware: .btn-ghost is used as a light pill over
+   photo hero backgrounds (always dark-scrimmed regardless of page theme)
+   and as a secondary action in .price-card. A fixed white/dark-ink
+   treatment reads correctly in both places in both themes. */
 .btn-ghost { background: var(--white); color: var(--brand-ink); border: 1px solid var(--slate-300); }
 .btn-ghost:hover { border-color: var(--slate-500); }
 
@@ -121,49 +213,54 @@ section { padding: var(--space-16) 0; }
 .section-head { text-align: center; max-width: 40rem; margin: 0 auto var(--space-12); }
 
 .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-6); }
+.grid-4 { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-6); }
 .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-8); align-items: center; }
 
 .card {
-  background: var(--white); border: 1px solid var(--slate-200); border-radius: var(--radius-xl);
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-xl);
   padding: var(--space-8);
 }
+.photo-card { border-radius: var(--radius-xl); overflow: hidden; border: 1px solid var(--border); }
+.photo-card img { width: 100%; height: 100%; display: block; object-fit: cover; }
 .card h3 { font-size: var(--text-lg); margin-bottom: var(--space-2); text-align: center; }
 .card p { text-align: center; }
 .card .icon {
-  width: 3rem; height: 3rem; border-radius: 9999px; background: var(--brand-blue-soft); color: var(--brand-blue);
+  width: 3rem; height: 3rem; border-radius: 9999px; background: var(--icon-soft); color: var(--brand-teal);
   display: flex; align-items: center; justify-content: center; font-size: var(--text-xl);
   margin: 0 auto var(--space-4);
 }
+:root[data-theme="light"] .card .icon { color: var(--brand-blue); }
 
 /* ── Pricing ─────────────────────────────────────────────────────────── */
 /* Matches the real F48 pricing cards: plain bordered Free card, Pro card
    gets a tinted-blue background + blue ring (not a teal border). */
 .pricing-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-6); max-width: 46rem; margin: 0 auto; }
-.price-card { border: 1px solid var(--slate-200); border-radius: var(--radius-xl); padding: var(--space-8); background: var(--white); }
-.price-card.featured { border: 1px solid var(--brand-blue); background: var(--brand-blue-soft); box-shadow: 0 0 0 1px var(--brand-blue); }
-.price-amount { font-size: var(--text-4xl); font-weight: 700; color: var(--brand-ink); margin: var(--space-4) 0; }
-.price-amount span { font-size: var(--text-base); font-weight: 500; color: var(--slate-500); }
+.price-card { display: flex; flex-direction: column; border: 1px solid var(--border); border-radius: var(--radius-xl); padding: var(--space-8); background: var(--surface); }
+.price-card .btn { margin-top: auto; }
+.price-card.featured { border: 1px solid var(--brand-blue); background: var(--icon-soft); box-shadow: 0 0 0 1px var(--brand-blue); }
+.price-amount { font-size: var(--text-4xl); font-weight: 700; color: var(--heading); margin: var(--space-4) 0; }
+.price-amount span { font-size: var(--text-base); font-weight: 500; color: var(--text-muted); }
 .price-features { list-style: none; padding: 0; margin: var(--space-6) 0; }
-.price-features li { padding: 0.375rem 0; padding-left: 1.5rem; position: relative; color: var(--slate-600); font-size: var(--text-sm); }
+.price-features li { padding: 0.375rem 0; padding-left: 1.5rem; position: relative; color: var(--text); font-size: var(--text-sm); }
 .price-features li::before { content: "✓"; position: absolute; left: 0; color: #10b981; font-weight: 700; }
 
 /* ── CTA band ────────────────────────────────────────────────────────── */
-.cta-band { background: var(--brand-ink); color: var(--white); text-align: center; border-radius: var(--radius-xl); padding: var(--space-16) var(--space-8); }
-.cta-band h2 { color: var(--white); }
-.cta-band p { color: var(--slate-300); }
+.cta-band { background: var(--brand-ink); color: var(--on-dark); text-align: center; border-radius: var(--radius-xl); padding: var(--space-16) var(--space-8); }
+.cta-band h2 { color: var(--brand-teal); }
+.cta-band p { color: var(--brand-teal); }
+:root[data-theme="light"] .cta-band h2 { color: var(--on-dark); }
+:root[data-theme="light"] .cta-band p { color: var(--slate-300); }
 
 /* ── Footer ──────────────────────────────────────────────────────────── */
-footer { border-top: 1px solid var(--slate-200); padding: var(--space-12) 0; }
-footer .wrap { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--space-4); }
-footer .foot-logo { height: 1.75rem; }
-footer nav { display: flex; gap: var(--space-6); list-style: none; }
-footer p { margin: 0; font-size: var(--text-sm); color: var(--slate-500); }
+footer { border-top: 1px solid var(--border); padding: var(--space-12) 0; }
+footer .wrap { text-align: center; }
+footer p { margin: 0; font-size: var(--text-sm); color: var(--text-muted); }
 
 /* ── Responsive ──────────────────────────────────────────────────────── */
 @media (max-width: 768px) {
   .nav-links { display: none; }
   .hero h1 { font-size: var(--text-3xl); }
   .hero .lede { font-size: var(--text-lg); }
-  .grid-3, .grid-2, .pricing-grid { grid-template-columns: 1fr; }
+  .grid-3, .grid-4, .grid-2, .pricing-grid { grid-template-columns: 1fr; }
   section { padding: var(--space-12) 0; }
 }
