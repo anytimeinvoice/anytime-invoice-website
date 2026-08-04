@@ -1,0 +1,60 @@
+name: Deploy Non-Prod
+
+# Deploys the `dev` branch to website-preview.anytimeinvoice.com on every
+# push. No DB, no workers, no build step for this static site — unlike the
+# app repo's deploy-non-prod.yml, a bad deploy here just costs a redeploy,
+# so this runs automatically rather than requiring a manual dispatch.
+
+on:
+  push:
+    branches: [dev]
+  workflow_dispatch: {}
+
+jobs:
+  deploy:
+    name: Deploy to website-preview
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Deploy to Vercel
+        id: deploy
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: team_uR3MOby3IAOOdmZCWSaP0eFg
+        run: |
+          set +H
+          npx vercel deploy --yes --token="$VERCEL_TOKEN" --scope "$VERCEL_ORG_ID" --project anytime-invoice-website 2>&1 | tee /tmp/deploy.log
+          echo "url=$(grep -Eo 'https://[^ ]+\.vercel\.app' /tmp/deploy.log | tail -1)" >> "$GITHUB_OUTPUT"
+
+      - name: Verify deployment URL
+        run: |
+          DEPLOY_URL="${{ steps.deploy.outputs.url }}"
+          if [ -z "$DEPLOY_URL" ]; then
+            echo "::error::Deploy step produced no URL — vercel deploy may have failed silently. Check the deploy log above."
+            exit 1
+          fi
+          echo "Deploy URL: $DEPLOY_URL"
+
+      - name: Alias to website-preview.anytimeinvoice.com
+        env:
+          DEPLOY_URL: ${{ steps.deploy.outputs.url }}
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: team_uR3MOby3IAOOdmZCWSaP0eFg
+        run: |
+          # vercel deploy returns the URL before the build is READY, so the
+          # alias can race ahead ("deployment is not ready"). Retry with a
+          # bounded timeout, matching the app repo's deploy-non-prod.yml
+          # pattern (ISSUE-455).
+          for i in $(seq 1 20); do
+            if npx vercel alias "$DEPLOY_URL" website-preview.anytimeinvoice.com --token "$VERCEL_TOKEN" --scope "$VERCEL_ORG_ID"; then
+              echo "Live at https://website-preview.anytimeinvoice.com"
+              exit 0
+            fi
+            echo "Deployment not ready yet — retry $i/20 in 10s…"
+            sleep 10
+          done
+          echo "::error::Alias failed: deployment never became READY within the timeout (~3.5 min)."
+          exit 1
