@@ -129,13 +129,14 @@ img, svg { max-width: 100%; display: block; }
 .quote-to-paid-bg h2 { font-size: var(--text-3xl); }
 .quote-to-paid-bg p { font-size: var(--text-lg); }
 
-.pricing-photo-bg {
+.full-photo-bg {
   min-height: 20rem;
-  background-image: url('photos/pricing-band.webp');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }
+.pricing-photo-bg { background-image: url('photos/pricing-band.webp'); }
+.features-photo-bg { background-image: url('photos/hands-on-work.webp'); }
 
 /* ── Buttons ─────────────────────────────────────────────────────────── */
 .btn {
