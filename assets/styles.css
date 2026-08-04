@@ -145,8 +145,8 @@ img, svg { max-width: 100%; display: block; }
 /* "Window" effect: background stays fixed while content scrolls over it,
    like looking through a window. Degrades gracefully to a normal cover
    background on iOS Safari, which doesn't support fixed attachment. */
-.about-paperwork-bg {
-  background-image: url('photos/about-paperwork.webp');
+.about-complexity-bg {
+  background-image: url('photos/about-complexity.webp');
   background-attachment: fixed;
 }
 
