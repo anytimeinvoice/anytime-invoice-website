@@ -142,6 +142,14 @@ img, svg { max-width: 100%; display: block; }
 .pricing-photo-bg { background-image: url('photos/pricing-band.webp'); }
 .features-photo-bg { background-image: url('photos/hands-on-work.webp'); }
 
+/* "Window" effect: background stays fixed while content scrolls over it,
+   like looking through a window. Degrades gracefully to a normal cover
+   background on iOS Safari, which doesn't support fixed attachment. */
+.about-paperwork-bg {
+  background-image: url('photos/about-paperwork.webp');
+  background-attachment: fixed;
+}
+
 /* ── Buttons ─────────────────────────────────────────────────────────── */
 .btn {
   display: inline-flex; align-items: center; justify-content: center;
