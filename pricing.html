@@ -2,6 +2,14 @@
 <html lang="en-AU">
 <head>
   <meta charset="UTF-8">
+  <script>
+    (function () {
+      var saved = localStorage.getItem('theme');
+      if (saved === 'light' || saved === 'dark') {
+        document.documentElement.setAttribute('data-theme', saved);
+      }
+    })();
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pricing — Anytime Invoice</title>
   <meta name="description" content="Free: 10 invoices/month, 50 customers, 10 receipt scans/month. Pro: $15/mo or $150/yr — unlimited invoices, customers, OCR scans, plus recurring invoices and custom templates.">
@@ -26,7 +34,14 @@
 
   <nav class="nav">
     <div class="wrap">
-      <a href="/"><img src="assets/logo-full.svg" alt="Anytime Invoice" class="nav-logo"></a>
+      <a href="/"><svg class="nav-logo" viewBox="0 0 350 100" width="350" height="100" fill="none" role="img" aria-label="Anytime Invoice">
+          <g transform="translate(10, 15) scale(0.7)">
+            <path class="logo-ring" d="M 50 15 A 35 35 0 1 0 85 50" stroke="currentColor" stroke-width="8" stroke-linecap="round"></path>
+            <path d="M 35 50 L 50 65 L 85 25" stroke="#0d9488" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"></path>
+          </g>
+          <text x="90" y="58" font-family="Inter, system-ui, sans-serif" font-size="34" font-weight="700" fill="currentColor">Anytime</text>
+          <text x="238" y="58" font-family="Inter, system-ui, sans-serif" font-size="34" font-weight="300" fill="currentColor">Invoice</text>
+        </svg></a>
       <ul class="nav-links">
         <li><a href="/features.html">Features</a></li>
         <li><a href="/pricing.html">Pricing</a></li>
@@ -34,6 +49,10 @@
         <li><a href="https://app.anytimeinvoice.com/sign-in">Sign in</a></li>
         <li><a href="https://app.anytimeinvoice.com/sign-up" class="nav-cta">Get started free</a></li>
       </ul>
+      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle dark mode">
+        <svg class="icon-sun" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
     </div>
   </nav>
 
@@ -87,5 +106,6 @@
   </footer>
 
   <script defer src="/_vercel/insights/script.js"></script>
+  <script defer src="assets/theme.js"></script>
 </body>
 </html>
