@@ -139,7 +139,7 @@ img, svg { max-width: 100%; display: block; }
 :root[data-theme="light"] .theme-toggle .icon-moon { display: none; }
 
 /* ── Hero ────────────────────────────────────────────────────────────── */
-/* Matches the real, live app.anytimeinvoice.com landing page (F48):
+/* Matches the real, live app.anytimeinvoice.com.au landing page (F48):
    centered logo above the heading, plain white background, blue accent. */
 .hero { padding: var(--space-20) 0; text-align: center; background: var(--surface); }
 .hero-logo { height: 3.5rem; width: auto; margin: 0 auto var(--space-8); }
