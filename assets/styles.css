@@ -114,6 +114,27 @@ img, svg { max-width: 100%; display: block; }
 .hero-photo h1, .hero-photo .lede { color: var(--white); }
 .hero-photo .accent { color: #93c5fd; }
 
+/* Full-width photo section backgrounds (reused pattern from .hero-photo) */
+.section-photo-bg {
+  padding: var(--space-20) 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: var(--white);
+}
+.section-photo-bg.quote-to-paid-bg {
+  background-image: linear-gradient(rgba(15, 23, 42, 0.6), rgba(15, 23, 42, 0.6)), url('photos/quote-to-paid.webp');
+}
+.section-photo-bg .section-eyebrow, .section-photo-bg h2, .section-photo-bg p { color: var(--white); }
+
+.pricing-photo-bg {
+  min-height: 20rem;
+  background-image: url('photos/pricing-band.webp');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
 /* ── Buttons ─────────────────────────────────────────────────────────── */
 .btn {
   display: inline-flex; align-items: center; justify-content: center;
