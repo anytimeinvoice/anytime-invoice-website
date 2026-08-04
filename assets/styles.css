@@ -52,38 +52,14 @@
   --shadow-lg: 0 10px 15px -3px rgba(15, 23, 42, 0.10), 0 4px 6px -4px rgba(15, 23, 42, 0.05);
   --container-max: 72rem;
 
-  /* Semantic theme tokens (light defaults) — these are the ones that flip
-     in dark mode. --white/--brand-ink/etc. above stay their literal colors
-     always, since several rules (button text on blue, headline text over
-     photos, the CTA band's own dark background) depend on them NOT
-     changing when the page theme flips. --on-dark is the fixed-white
-     counterpart for exactly those cases. */
-  --surface: var(--white);
-  --surface-alt: var(--slate-50);
-  --heading: var(--brand-ink);
-  --text: var(--slate-600);
-  --text-strong: var(--slate-800);
-  --text-muted: var(--slate-500);
-  --border: var(--slate-200);
-  --nav-bg: rgba(255, 255, 255, 0.9);
-  --icon-soft: var(--brand-blue-soft);
-  --on-dark: #ffffff;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --surface: #0f172a;
-    --surface-alt: #1e293b;
-    --heading: #f1f5f9;
-    --text: #cbd5e1;
-    --text-strong: #e2e8f0;
-    --text-muted: #94a3b8;
-    --border: #334155;
-    --nav-bg: rgba(15, 23, 42, 0.85);
-    --icon-soft: #1e3a5f;
-  }
-}
-:root[data-theme="dark"] {
+  /* Semantic theme tokens — DARK is the default appearance (site-wide
+     decision, not tied to OS preference). Light mode is opt-out only, via
+     the toggle setting data-theme="light" (persisted to localStorage).
+     --white/--brand-ink/etc. above stay their literal colors always,
+     since several rules (button text on blue, headline text over photos,
+     the CTA band's own dark background) depend on them NOT changing when
+     the page theme flips. --on-dark is the fixed-white counterpart for
+     exactly those cases. */
   --surface: #0f172a;
   --surface-alt: #1e293b;
   --heading: #f1f5f9;
@@ -93,6 +69,19 @@
   --border: #334155;
   --nav-bg: rgba(15, 23, 42, 0.85);
   --icon-soft: #1e3a5f;
+  --on-dark: #ffffff;
+}
+
+:root[data-theme="light"] {
+  --surface: var(--white);
+  --surface-alt: var(--slate-50);
+  --heading: var(--brand-ink);
+  --text: var(--slate-600);
+  --text-strong: var(--slate-800);
+  --text-muted: var(--slate-500);
+  --border: var(--slate-200);
+  --nav-bg: rgba(255, 255, 255, 0.9);
+  --icon-soft: var(--brand-blue-soft);
 }
 
 * { box-sizing: border-box; }
@@ -123,10 +112,8 @@ img, svg { max-width: 100%; display: block; }
 }
 .nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 4.5rem; }
 .nav-logo { height: 2.75rem; width: auto; color: var(--heading); }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .nav-logo .logo-ring { stroke: #ffffff; }
-}
-:root[data-theme="dark"] .nav-logo .logo-ring { stroke: #ffffff; }
+.nav-logo .logo-ring { stroke: #ffffff; }
+:root[data-theme="light"] .nav-logo .logo-ring { stroke: currentColor; }
 .nav-links { display: flex; align-items: center; gap: var(--space-8); list-style: none; margin: 0; padding: 0; }
 .nav-links a { color: var(--text-strong); font-weight: 500; font-size: var(--text-sm); }
 .nav-links a:hover { color: var(--brand-blue); }
@@ -146,13 +133,10 @@ img, svg { max-width: 100%; display: block; }
   cursor: pointer;
 }
 .theme-toggle:hover { border-color: var(--brand-blue); color: var(--brand-blue); }
-.theme-toggle .icon-moon { display: none; }
-:root[data-theme="dark"] .theme-toggle .icon-sun { display: none; }
-:root[data-theme="dark"] .theme-toggle .icon-moon { display: block; }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .theme-toggle .icon-sun { display: none; }
-  :root:not([data-theme="light"]) .theme-toggle .icon-moon { display: block; }
-}
+.theme-toggle .icon-sun { display: none; }
+.theme-toggle .icon-moon { display: block; }
+:root[data-theme="light"] .theme-toggle .icon-sun { display: block; }
+:root[data-theme="light"] .theme-toggle .icon-moon { display: none; }
 
 /* ── Hero ────────────────────────────────────────────────────────────── */
 /* Matches the real, live app.anytimeinvoice.com landing page (F48):
@@ -262,14 +246,10 @@ section { padding: var(--space-16) 0; }
 
 /* ── CTA band ────────────────────────────────────────────────────────── */
 .cta-band { background: var(--brand-ink); color: var(--on-dark); text-align: center; border-radius: var(--radius-xl); padding: var(--space-16) var(--space-8); }
-.cta-band h2 { color: var(--on-dark); }
-.cta-band p { color: var(--slate-300); }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .cta-band h2 { color: var(--brand-teal); }
-  :root:not([data-theme="light"]) .cta-band p { color: var(--brand-teal); }
-}
-:root[data-theme="dark"] .cta-band h2 { color: var(--brand-teal); }
-:root[data-theme="dark"] .cta-band p { color: var(--brand-teal); }
+.cta-band h2 { color: var(--brand-teal); }
+.cta-band p { color: var(--brand-teal); }
+:root[data-theme="light"] .cta-band h2 { color: var(--on-dark); }
+:root[data-theme="light"] .cta-band p { color: var(--slate-300); }
 
 /* ── Footer ──────────────────────────────────────────────────────────── */
 footer { border-top: 1px solid var(--border); padding: var(--space-12) 0; }

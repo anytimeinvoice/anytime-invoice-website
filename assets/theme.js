@@ -3,10 +3,9 @@
   if (!toggle) return;
   toggle.addEventListener('click', function () {
     var root = document.documentElement;
-    var current = root.getAttribute('data-theme');
-    var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    var isDark = current ? current === 'dark' : prefersDark;
-    var next = isDark ? 'light' : 'dark';
+    // Dark is the default (no attribute = dark); only "light" is explicit.
+    var isLight = root.getAttribute('data-theme') === 'light';
+    var next = isLight ? 'dark' : 'light';
     root.setAttribute('data-theme', next);
     try {
       localStorage.setItem('theme', next);
