@@ -8,6 +8,11 @@
     var isDark = current ? current === 'dark' : prefersDark;
     var next = isDark ? 'light' : 'dark';
     root.setAttribute('data-theme', next);
-    localStorage.setItem('theme', next);
+    try {
+      localStorage.setItem('theme', next);
+    } catch (e) {
+      // Safari blocks localStorage under file:// URLs — the toggle still
+      // works for the current page view, it just won't persist.
+    }
   });
 })();
