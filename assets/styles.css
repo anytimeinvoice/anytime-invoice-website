@@ -225,10 +225,11 @@ section { padding: var(--space-16) 0; }
 .card h3 { font-size: var(--text-lg); margin-bottom: var(--space-2); text-align: center; }
 .card p { text-align: center; }
 .card .icon {
-  width: 3rem; height: 3rem; border-radius: 9999px; background: var(--icon-soft); color: var(--brand-blue);
+  width: 3rem; height: 3rem; border-radius: 9999px; background: var(--icon-soft); color: var(--brand-teal);
   display: flex; align-items: center; justify-content: center; font-size: var(--text-xl);
   margin: 0 auto var(--space-4);
 }
+:root[data-theme="light"] .card .icon { color: var(--brand-blue); }
 
 /* ── Pricing ─────────────────────────────────────────────────────────── */
 /* Matches the real F48 pricing cards: plain bordered Free card, Pro card
