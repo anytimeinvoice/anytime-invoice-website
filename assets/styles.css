@@ -183,8 +183,6 @@ img, svg { max-width: 100%; display: block; }
   background-position: center;
   background-repeat: no-repeat;
 }
-.pricing-photo-bg { background-image: url('photos/pricing-band.webp'); }
-.features-photo-bg { background-image: url('photos/hands-on-work.webp'); }
 
 /* "Window" effect: background stays fixed while content scrolls over it,
    like looking through a window. Degrades gracefully to a normal cover
@@ -236,7 +234,8 @@ section { padding: var(--space-16) 0; }
 /* Matches the real F48 pricing cards: plain bordered Free card, Pro card
    gets a tinted-blue background + blue ring (not a teal border). */
 .pricing-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-6); max-width: 46rem; margin: 0 auto; }
-.price-card { border: 1px solid var(--border); border-radius: var(--radius-xl); padding: var(--space-8); background: var(--surface); }
+.price-card { display: flex; flex-direction: column; border: 1px solid var(--border); border-radius: var(--radius-xl); padding: var(--space-8); background: var(--surface); }
+.price-card .btn { margin-top: auto; }
 .price-card.featured { border: 1px solid var(--brand-blue); background: var(--icon-soft); box-shadow: 0 0 0 1px var(--brand-blue); }
 .price-amount { font-size: var(--text-4xl); font-weight: 700; color: var(--heading); margin: var(--space-4) 0; }
 .price-amount span { font-size: var(--text-base); font-weight: 500; color: var(--text-muted); }
