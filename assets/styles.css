@@ -104,15 +104,19 @@ img, svg { max-width: 100%; display: block; }
 .hero .lede { font-size: var(--text-lg); max-width: 34rem; margin: 0 auto var(--space-8); }
 .hero-actions { display: flex; gap: var(--space-4); justify-content: center; flex-wrap: wrap; }
 
-/* Full-width photo hero (home page) */
+/* Full-width photo hero (any page) */
 .hero-photo {
   position: relative;
   padding: var(--space-20) 0;
-  background: linear-gradient(rgba(15, 23, 42, 0.6), rgba(15, 23, 42, 0.6)), url('photos/hero-ladder.webp') center/cover no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   color: var(--white);
 }
 .hero-photo h1, .hero-photo .lede { color: var(--white); }
 .hero-photo .accent { color: #93c5fd; }
+.home-hero-photo { background-image: linear-gradient(rgba(15, 23, 42, 0.6), rgba(15, 23, 42, 0.6)), url('photos/hero-ladder.webp'); }
+.pricing-hero-photo { background-image: linear-gradient(rgba(15, 23, 42, 0.55), rgba(15, 23, 42, 0.55)), url('photos/pricing-band.webp'); }
 
 /* Full-width photo section backgrounds (reused pattern from .hero-photo) */
 .section-photo-bg {
