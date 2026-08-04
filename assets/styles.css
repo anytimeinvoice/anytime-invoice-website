@@ -80,7 +80,7 @@ img, svg { max-width: 100%; display: block; }
   z-index: 10;
 }
 .nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 4.5rem; }
-.nav-logo { height: 2.25rem; width: auto; }
+.nav-logo { height: 2.75rem; width: auto; }
 .nav-links { display: flex; align-items: center; gap: var(--space-8); list-style: none; margin: 0; padding: 0; }
 .nav-links a { color: var(--slate-800); font-weight: 500; font-size: var(--text-sm); }
 .nav-links a:hover { color: var(--brand-blue); }
@@ -126,6 +126,8 @@ img, svg { max-width: 100%; display: block; }
   background-image: linear-gradient(rgba(15, 23, 42, 0.6), rgba(15, 23, 42, 0.6)), url('photos/quote-to-paid.webp');
 }
 .section-photo-bg .section-eyebrow, .section-photo-bg h2, .section-photo-bg p { color: var(--white); }
+.quote-to-paid-bg h2 { font-size: var(--text-3xl); }
+.quote-to-paid-bg p { font-size: var(--text-lg); }
 
 .pricing-photo-bg {
   min-height: 20rem;
@@ -187,9 +189,7 @@ section { padding: var(--space-16) 0; }
 
 /* ── Footer ──────────────────────────────────────────────────────────── */
 footer { border-top: 1px solid var(--slate-200); padding: var(--space-12) 0; }
-footer .wrap { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--space-4); }
-footer .foot-logo { height: 1.75rem; }
-footer nav { display: flex; gap: var(--space-6); list-style: none; }
+footer .wrap { text-align: center; }
 footer p { margin: 0; font-size: var(--text-sm); color: var(--slate-500); }
 
 /* ── Responsive ──────────────────────────────────────────────────────── */
