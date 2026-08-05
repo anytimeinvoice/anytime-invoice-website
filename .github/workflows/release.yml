@@ -1,0 +1,50 @@
+name: Release
+
+# Auto-tags every push to master (i.e. every dev -> master release PR merge)
+# with an incrementing patch version — vX.Y.Z, no conventional-commit
+# parsing, just latest-tag-plus-one. This repo has no meaningful "version"
+# to track (it's a static marketing site, not a library) — the sole purpose
+# of these tags is to give deploy-prod.yml's guard a rollback marker to
+# dispatch from, matching the app repo's tag-gated release pattern without
+# the semantic-release machinery that pattern normally requires.
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  tag:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Compute next version
+        id: version
+        run: |
+          LATEST=$(git tag --list 'v*.*.*' --sort=-v:refname | head -1)
+          if [ -z "$LATEST" ]; then
+            NEXT="v1.0.0"
+          else
+            BASE=${LATEST#v}
+            MAJOR=$(echo "$BASE" | cut -d. -f1)
+            MINOR=$(echo "$BASE" | cut -d. -f2)
+            PATCH=$(echo "$BASE" | cut -d. -f3)
+            NEXT="v${MAJOR}.${MINOR}.$((PATCH + 1))"
+          fi
+          echo "Latest: ${LATEST:-none}, next: $NEXT"
+          echo "next=$NEXT" >> "$GITHUB_OUTPUT"
+
+      - name: Create and push tag
+        env:
+          NEXT: ${{ steps.version.outputs.next }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git tag "$NEXT"
+          git push origin "$NEXT"
+          echo "Tagged $NEXT — dispatch deploy-prod.yml from this tag when ready."
