@@ -1,36 +1,52 @@
 name: Deploy Prod
 
-# Production deploy for the marketing site — always from `master`, always
-# HUMAN-dispatched (mirrors the app repo's ADR-0006 human-gate). Agents may
-# prepare the dev -> master release PR but must never dispatch this
-# workflow. No DB, no workers, no separate promote-from-preview step: this
-# is a static site with no build step, so a fresh `vercel deploy --prod`
-# rebuild is cheap and side-effect-free — unlike the app repo, there's no
-# reason to promote an already-built preview instead of just rebuilding.
+# Production deploy for the marketing site — from `master` or a semver
+# release tag reachable from master, always HUMAN-dispatched (mirrors the
+# app repo's ADR-0006 human-gate). Agents may prepare the dev -> master
+# release PR but must never dispatch this workflow. No DB, no workers, no
+# separate promote-from-preview step: this is a static site with no build
+# step, so a fresh `vercel deploy --prod` rebuild is cheap and
+# side-effect-free — unlike the app repo, there's no reason to promote an
+# already-built preview instead of just rebuilding.
 #
 # `vercel deploy --prod` aliases to whichever domains are configured as this
-# project's Production target (www.anytimeinvoice.com and the apex
-# anytimeinvoice.com) — neither is pinned to a git branch, so no explicit
-# `vercel alias` step is needed here.
+# project's Production target (www.anytimeinvoice.com/.com.au and the apex
+# domains) — none are pinned to a git branch, so no explicit `vercel alias`
+# step is needed here.
 
 on:
   workflow_dispatch: {}
 
 jobs:
   guard:
-    name: Guard — must dispatch from master
+    name: Guard — must dispatch from master or a release tag on master
     runs-on: ubuntu-latest
     timeout-minutes: 2
     steps:
-      - name: Verify ref is master
+      - uses: actions/checkout@v4
+        with:
+          # Full history needed to verify tag ancestry against origin/master
+          fetch-depth: 0
+
+      - name: Verify ref is master or a semver tag on master
         env:
           REF: ${{ github.ref }}
         run: |
-          if [ "$REF" != "refs/heads/master" ]; then
-            echo "::error::Production deploys must be dispatched from master (got '$REF'). Merge dev -> master first, then re-run this workflow with master selected as the branch."
+          if echo "$REF" | grep -qE '^refs/heads/master$'; then
+            echo "Guard passed: dispatched from master"
+          elif echo "$REF" | grep -qE '^refs/tags/v[0-9]+\.[0-9]+\.[0-9]+'; then
+            git fetch origin master --quiet
+            TAG_COMMIT=$(git rev-parse 'HEAD^{commit}')
+            if git merge-base --is-ancestor "$TAG_COMMIT" origin/master; then
+              echo "Guard passed: tag $REF ($TAG_COMMIT) is on master"
+            else
+              echo "::error::Guard failed: tag '$REF' points to commit $TAG_COMMIT, which is NOT reachable from origin/master. Release tags must be cut on master."
+              exit 1
+            fi
+          else
+            echo "::error::Production deploys must be dispatched from master or a semver tag (vX.Y.Z) on master (got '$REF'). Merge dev -> master first, then re-run this workflow with master (or a tag on master) selected."
             exit 1
           fi
-          echo "Guard passed: dispatched from master"
 
   deploy:
     name: Deploy to production
@@ -41,8 +57,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-        with:
-          ref: master
 
       - name: Deploy to Vercel (production)
         env:
