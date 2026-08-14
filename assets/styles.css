@@ -110,7 +110,7 @@ img, svg { max-width: 100%; display: block; }
   backdrop-filter: blur(8px);
   z-index: 10;
 }
-.nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 4.5rem; }
+.nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 4.5rem; position: relative; }
 .nav-logo { height: 2.75rem; width: auto; color: var(--heading); }
 .nav-links { display: flex; align-items: center; gap: var(--space-8); list-style: none; margin: 0; padding: 0; }
 .nav-links a { color: var(--text-strong); font-weight: 500; font-size: var(--text-sm); }
@@ -123,7 +123,18 @@ img, svg { max-width: 100%; display: block; }
   font-weight: 600;
 }
 .nav-cta:hover { background: var(--brand-blue-hover); }
-.nav-mobile-toggle { display: none; }
+.nav-mobile-toggle {
+  display: none;
+  align-items: center; justify-content: center;
+  width: 2.25rem; height: 2.25rem; margin-left: 0.5rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border); background: transparent; color: var(--text-strong);
+  cursor: pointer;
+}
+.nav-mobile-toggle:hover { border-color: var(--brand-blue); color: var(--brand-blue); }
+.nav-mobile-toggle .icon-close { display: none; }
+.nav-mobile-toggle[aria-expanded="true"] .icon-menu { display: none; }
+.nav-mobile-toggle[aria-expanded="true"] .icon-close { display: block; }
 .theme-toggle {
   display: inline-flex; align-items: center; justify-content: center;
   width: 2.25rem; height: 2.25rem; border-radius: var(--radius-md);
@@ -256,7 +267,20 @@ footer p { margin: 0; font-size: var(--text-sm); color: var(--text-muted); }
 
 /* ── Responsive ──────────────────────────────────────────────────────── */
 @media (max-width: 768px) {
-  .nav-links { display: none; }
+  .nav-mobile-toggle { display: inline-flex; }
+  .theme-toggle { margin-left: auto; }
+  .nav-links {
+    display: none;
+    position: absolute; top: 100%; left: 0; right: 0;
+    flex-direction: column; align-items: stretch;
+    gap: var(--space-4);
+    margin: 0; padding: var(--space-6);
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+  }
+  .nav-links.open { display: flex; }
+  .nav-cta { text-align: center; }
   .hero h1 { font-size: var(--text-3xl); }
   .hero .lede { font-size: var(--text-lg); }
   .grid-3, .grid-4, .grid-2, .pricing-grid { grid-template-columns: 1fr; }
