@@ -272,11 +272,14 @@ section { padding: var(--space-16) 0; }
 .legal ul { margin: 0 0 var(--space-4); padding-left: var(--space-6); color: var(--text); }
 .legal li { margin-bottom: 0.375rem; }
 .legal strong, .legal .strong { color: var(--text-strong); }
+.legal a { text-decoration: underline; text-underline-offset: 2px; }
+.legal .note { font-size: var(--text-sm); color: var(--text-muted); border-top: 1px solid var(--border); padding-top: var(--space-4); margin-top: var(--space-8); }
 .legal p.strong { color: var(--text-strong); }
 
 /* ── Footer ──────────────────────────────────────────────────────────── */
 footer { border-top: 1px solid var(--border); padding: var(--space-12) 0; }
 footer .wrap { text-align: center; }
+.footer-links + .footer-links { margin-top: calc(-1 * var(--space-2)); }
 .footer-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 0 var(--space-6); margin-bottom: var(--space-4); }
 .footer-links a { color: var(--text); font-size: var(--text-sm); padding: 0.75rem 0.25rem; }
 .footer-links a:hover { color: var(--link); }
