@@ -38,6 +38,7 @@
   --text-5xl: 3rem;
 
   /* Spacing / radius / shadow */
+  --space-2: 0.5rem;
   --space-4: 1rem;
   --space-6: 1.5rem;
   --space-8: 2rem;
@@ -70,6 +71,7 @@
   --nav-bg: rgba(15, 23, 42, 0.85);
   --icon-soft: #1e3a5f;
   --on-dark: #ffffff;
+  --link: #60a5fa; /* brand-blue is 3.6:1 on the dark surface; this is 7:1 */
 }
 
 :root[data-theme="light"] {
@@ -82,10 +84,12 @@
   --border: var(--slate-200);
   --nav-bg: rgba(255, 255, 255, 0.9);
   --icon-soft: var(--brand-blue-soft);
+  --link: var(--brand-blue);
 }
 
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; } }
 body {
   margin: 0;
   font-family: var(--font-sans);
@@ -96,8 +100,12 @@ body {
 }
 h1, h2, h3 { color: var(--heading); line-height: 1.25; letter-spacing: -0.02em; margin: 0 0 var(--space-4); }
 p { margin: 0 0 var(--space-4); color: var(--text); }
-a { color: var(--brand-blue); text-decoration: none; }
+a { color: var(--link); text-decoration: none; }
+a, button { transition: color .2s, background-color .2s, border-color .2s; }
+:focus-visible { outline: 2px solid var(--link); outline-offset: 3px; border-radius: var(--radius-md); }
 img, svg { max-width: 100%; display: block; }
+.skip { position: absolute; left: var(--space-4); top: -4rem; z-index: 20; background: var(--brand-blue); color: var(--on-dark); padding: var(--space-2) var(--space-4); border-radius: var(--radius-md); }
+.skip:focus { top: var(--space-2); }
 
 .wrap { max-width: var(--container-max); margin: 0 auto; padding: 0 var(--space-6); }
 
@@ -114,7 +122,8 @@ img, svg { max-width: 100%; display: block; }
 .nav-logo { height: 2.75rem; width: auto; color: var(--heading); }
 .nav-links { display: flex; align-items: center; gap: var(--space-8); list-style: none; margin: 0; padding: 0; }
 .nav-links a { color: var(--text-strong); font-weight: 500; font-size: var(--text-sm); }
-.nav-links a:hover { color: var(--brand-blue); }
+.nav-links a:not(.nav-cta) { padding: 0.875rem 0; } /* ≥44px tap height */
+.nav-links a:hover { color: var(--link); }
 .nav-cta {
   background: var(--brand-blue);
   color: var(--on-dark) !important;
@@ -126,22 +135,22 @@ img, svg { max-width: 100%; display: block; }
 .nav-mobile-toggle {
   display: none;
   align-items: center; justify-content: center;
-  width: 2.25rem; height: 2.25rem; margin-left: 0.5rem;
+  width: 2.75rem; height: 2.75rem; margin-left: 0.5rem;
   border-radius: var(--radius-md);
   border: 1px solid var(--border); background: transparent; color: var(--text-strong);
   cursor: pointer;
 }
-.nav-mobile-toggle:hover { border-color: var(--brand-blue); color: var(--brand-blue); }
+.nav-mobile-toggle:hover { border-color: var(--link); color: var(--link); }
 .nav-mobile-toggle .icon-close { display: none; }
 .nav-mobile-toggle[aria-expanded="true"] .icon-menu { display: none; }
 .nav-mobile-toggle[aria-expanded="true"] .icon-close { display: block; }
 .theme-toggle {
   display: inline-flex; align-items: center; justify-content: center;
-  width: 2.25rem; height: 2.25rem; border-radius: var(--radius-md);
+  width: 2.75rem; height: 2.75rem; border-radius: var(--radius-md);
   border: 1px solid var(--border); background: transparent; color: var(--text-strong);
   cursor: pointer;
 }
-.theme-toggle:hover { border-color: var(--brand-blue); color: var(--brand-blue); }
+.theme-toggle:hover { border-color: var(--link); color: var(--link); }
 .theme-toggle .icon-sun { display: none; }
 .theme-toggle .icon-moon { display: block; }
 :root[data-theme="light"] .theme-toggle .icon-sun { display: block; }
@@ -151,7 +160,6 @@ img, svg { max-width: 100%; display: block; }
 /* Matches the real, live app.anytimeinvoice.com.au landing page (F48):
    centered logo above the heading, plain white background, blue accent. */
 .hero { padding: var(--space-20) 0; text-align: center; background: var(--surface); }
-.hero-logo { height: 3.5rem; width: auto; margin: 0 auto var(--space-8); }
 .hero h1 { font-size: var(--text-4xl); max-width: 40rem; margin: 0 auto var(--space-6); }
 .hero .accent { color: var(--brand-blue); }
 .hero .lede { font-size: var(--text-lg); max-width: 34rem; margin: 0 auto var(--space-8); }
@@ -167,7 +175,7 @@ img, svg { max-width: 100%; display: block; }
   color: var(--on-dark);
 }
 .hero-photo h1, .hero-photo .lede { color: var(--on-dark); }
-.hero-photo .accent { color: #93c5fd; }
+.hero-photo .accent { color: #bfdbfe; }
 .home-hero-photo { background-image: linear-gradient(rgba(15, 23, 42, 0.6), rgba(15, 23, 42, 0.6)), url('photos/hero-ladder.webp'); }
 .pricing-hero-photo { background-image: linear-gradient(rgba(15, 23, 42, 0.55), rgba(15, 23, 42, 0.55)), url('photos/pricing-band.webp'); }
 
@@ -219,6 +227,7 @@ img, svg { max-width: 100%; display: block; }
 /* ── Sections ────────────────────────────────────────────────────────── */
 section { padding: var(--space-16) 0; }
 .section-eyebrow { text-transform: uppercase; letter-spacing: 0.05em; font-size: var(--text-sm); font-weight: 600; color: var(--brand-teal); margin-bottom: var(--space-2); }
+:root[data-theme="light"] section:not(.section-photo-bg) .section-eyebrow { color: var(--brand-teal-hover); } /* 5.5:1 on white */
 .section-head { text-align: center; max-width: 40rem; margin: 0 auto var(--space-12); }
 
 .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-6); }
@@ -251,18 +260,26 @@ section { padding: var(--space-16) 0; }
 .price-amount span { font-size: var(--text-base); font-weight: 500; color: var(--text-muted); }
 .price-features { list-style: none; padding: 0; margin: var(--space-6) 0; }
 .price-features li { padding: 0.375rem 0; padding-left: 1.5rem; position: relative; color: var(--text); font-size: var(--text-sm); }
-.price-features li::before { content: "✓"; position: absolute; left: 0; color: #10b981; font-weight: 700; }
+.price-features li::before { content: "✓"; position: absolute; left: 0; color: var(--brand-teal); font-weight: 700; }
 
 /* ── CTA band ────────────────────────────────────────────────────────── */
 .cta-band { background: var(--brand-ink); color: var(--on-dark); text-align: center; border-radius: var(--radius-xl); padding: var(--space-16) var(--space-8); }
-.cta-band h2 { color: var(--brand-teal); }
-.cta-band p { color: var(--brand-teal); }
-:root[data-theme="light"] .cta-band h2 { color: var(--on-dark); }
-:root[data-theme="light"] .cta-band p { color: var(--slate-300); }
+.cta-band h2 { color: var(--on-dark); }
+.cta-band p { color: var(--slate-300); }
+
+.legal h2 { font-size: var(--text-lg); margin: var(--space-8) 0 var(--space-2); }
+.legal h2:first-child { margin-top: 0; }
+.legal ul { margin: 0 0 var(--space-4); padding-left: var(--space-6); color: var(--text); }
+.legal li { margin-bottom: 0.375rem; }
+.legal strong, .legal .strong { color: var(--text-strong); }
+.legal p.strong { color: var(--text-strong); }
 
 /* ── Footer ──────────────────────────────────────────────────────────── */
 footer { border-top: 1px solid var(--border); padding: var(--space-12) 0; }
 footer .wrap { text-align: center; }
+.footer-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 0 var(--space-6); margin-bottom: var(--space-4); }
+.footer-links a { color: var(--text); font-size: var(--text-sm); padding: 0.75rem 0.25rem; }
+.footer-links a:hover { color: var(--link); }
 footer p { margin: 0; font-size: var(--text-sm); color: var(--text-muted); }
 
 /* ── Responsive ──────────────────────────────────────────────────────── */
@@ -280,9 +297,12 @@ footer p { margin: 0; font-size: var(--text-sm); color: var(--text-muted); }
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
   }
   .nav-links.open { display: flex; }
-  .nav-cta { text-align: center; }
+  .nav-cta { text-align: center; padding-block: 0.875rem; }
   .hero h1 { font-size: var(--text-3xl); }
   .hero .lede { font-size: var(--text-lg); }
   .grid-3, .grid-4, .grid-2, .pricing-grid { grid-template-columns: 1fr; }
   section { padding: var(--space-12) 0; }
+  .hero, .hero-photo { padding: var(--space-12) 0; }
+  .card { padding: var(--space-6); }
+  .cta-band { padding: var(--space-12) var(--space-6); }
 }
