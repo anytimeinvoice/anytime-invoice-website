@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+  <meta charset="UTF-8">
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem('theme');
+        if (saved === 'light' || saved === 'dark') {
+          document.documentElement.setAttribute('data-theme', saved);
+        }
+      } catch (e) {}
+    })();
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GST and Invoicing for Sole Traders — Anytime Invoice</title>
+  <meta name="description" content="Do you need to charge GST as a sole trader? The $75,000 threshold, what to put on invoices, and how to keep your GST sorted. Free to start.">
+  <link rel="canonical" href="https://anytimeinvoice.com.au/gst-invoice-sole-trader.html">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Anytime Invoice">
+  <meta property="og:url" content="https://anytimeinvoice.com.au/gst-invoice-sole-trader.html">
+  <meta property="og:title" content="GST and Invoicing for Sole Traders — Anytime Invoice">
+  <meta property="og:description" content="Do you need to charge GST as a sole trader? The $75,000 threshold, what to put on invoices, and how to keep your GST sorted. Free to start.">
+  <meta property="og:image" content="https://anytimeinvoice.com.au/assets/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="GST and Invoicing for Sole Traders — Anytime Invoice">
+  <meta name="twitter:description" content="Do you need to charge GST as a sole trader? The $75,000 threshold, what to put on invoices, and how to keep your GST sorted. Free to start.">
+  <meta name="twitter:image" content="https://anytimeinvoice.com.au/assets/og-image.png">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://anytimeinvoice.com.au/" },
+      { "@type": "ListItem", "position": 2, "name": "GST invoicing for sole traders", "item": "https://anytimeinvoice.com.au/gst-invoice-sole-trader.html" }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <nav class="nav">
+    <div class="wrap">
+      <a href="/"><svg class="nav-logo" viewBox="0 10 350 80" width="350" height="80" fill="none" role="img" aria-label="Anytime Invoice">
+          <g transform="translate(10, 15) scale(0.583)">
+            <rect x="2" y="2" width="116" height="116" rx="26" fill="#0F172A" stroke="#475569" stroke-width="4"></rect>
+            <circle cx="60" cy="60" r="46" fill="none" stroke="#FFFFFF" stroke-width="13"></circle>
+            <rect x="43" y="43" width="34" height="34" fill="#0F172A"></rect>
+            <path d="M46 61 L57 72 L76 49" fill="none" stroke="#0d9488" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"></path>
+          </g>
+          <text x="90" y="58" font-family="Inter, system-ui, sans-serif" font-size="34" font-weight="700" fill="currentColor">Anytime</text>
+          <text x="238" y="58" font-family="Inter, system-ui, sans-serif" font-size="34" font-weight="300" fill="currentColor">Invoice</text>
+        </svg></a>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="/features.html">Features</a></li>
+        <li><a href="/pricing.html">Pricing</a></li>
+        <li><a href="/about.html">About</a></li>
+        <li><a href="https://app.anytimeinvoice.com.au/sign-in">Sign in</a></li>
+        <li><a href="https://app.anytimeinvoice.com.au/sign-up" class="nav-cta">Get started free</a></li>
+      </ul>
+      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle dark mode">
+        <svg class="icon-sun" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <button class="nav-mobile-toggle" id="nav-toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">
+        <svg class="icon-menu" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        <svg class="icon-close" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+  </nav>
+
+  <main id="main">
+  <header class="hero" style="padding: var(--space-16) 0 var(--space-8);">
+    <div class="wrap">
+      <h1 style="font-size: var(--text-4xl);">GST and invoicing for sole traders</h1>
+      <p class="lede" style="margin-bottom: 0;">When GST applies, when it does not, and how to keep your invoices straight.</p>
+    </div>
+  </header>
+
+  <section>
+    <div class="wrap legal" style="max-width: 42rem;">
+<h2>Do you have to register for GST?</h2>
+<p>You must register for GST when your GST turnover is $75,000 or more, or when you start a new business and expect to reach that threshold in your first year. (For non-profit organisations the threshold is $150,000.) If you provide taxi or limousine travel, including ride-sourcing, you must register regardless of turnover. Below the threshold, registering is optional.</p>
+<h2>If you are registered</h2>
+<ul>
+<li>Charge GST on your taxable sales and issue tax invoices (see our guide to <a href="/ato-compliant-tax-invoice.html">what a tax invoice must include</a>)</li>
+<li>Report and pay GST through your activity statement</li>
+<li>Keep records of your sales and your business purchases</li>
+</ul>
+<h2>If you are not registered</h2>
+<p>You do not charge GST and you do not issue tax invoices. You can still send a clear invoice with your business details, a description of the work, the amount due and how to pay.</p>
+<h2>Keeping track without a spreadsheet</h2>
+<p>Anytime Invoice shows income, GST and overdue reports so you can see what is coming in, what is set aside for tax and who is running late. You can photograph a receipt and have it read and categorised automatically &mdash; 10 scans a month on the free plan, unlimited on Pro. Customer statements give you a running balance per customer when they ask what they still owe.</p>
+<p>The ATO generally expects businesses to keep tax-related records for five years, so it helps to have invoices and receipts in one searchable place.</p>
+<p>Source: the ATO&rsquo;s <a href="https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst/registering-for-gst" rel="noopener">registering for GST</a> guidance.</p>
+<p class="note">General information, not tax advice. You are responsible for your own GST registration and the accuracy of every invoice you issue &mdash; check the ATO guidance or ask your accountant or tax agent.</p>
+<h2>Related guides</h2>
+<ul>
+<li><a href="/ato-compliant-tax-invoice.html">What makes a tax invoice ATO-compliant?</a></li>
+<li><a href="/quote-app-for-tradies.html">A quoting app built for tradies</a></li>
+<li><a href="/features.html">All features</a></li>
+<li><a href="/pricing.html">Pricing</a></li>
+</ul>
+    </div>
+  </section>
+
+  <section style="background: var(--surface-alt);">
+    <div class="wrap">
+      <div class="cta-band">
+        <h2>Keep your invoices and GST in one place</h2>
+        <p>Free to start &mdash; unlimited invoices &amp; customers, no card required.</p>
+        <a href="https://app.anytimeinvoice.com.au/sign-up" class="btn btn-primary">Get started free</a>
+      </div>
+    </div>
+  </section>
+
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <nav class="footer-links" aria-label="Footer"><a href="/features.html">Features</a><a href="/pricing.html">Pricing</a><a href="/about.html">About</a><a href="/privacy.html">Privacy</a><a href="/terms.html">Terms</a></nav>
+      <nav class="footer-links" aria-label="Guides"><a href="/ato-compliant-tax-invoice.html">Tax invoice guide</a><a href="/gst-invoice-sole-trader.html">GST for sole traders</a><a href="/quote-app-for-tradies.html">Quote app for tradies</a></nav>
+      <p>&copy; 2026 Anytime Invoice</p>
+    </div>
+  </footer>
+
+  <script defer src="/_vercel/insights/script.js"></script>
+  <script defer src="assets/theme.js"></script>
+</body>
+</html>
