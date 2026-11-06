@@ -68,7 +68,7 @@ jobs:
       - name: Verify production is live
         run: |
           for i in $(seq 1 12); do
-            CODE=$(curl -s -o /dev/null -w "%{http_code}" https://www.anytimeinvoice.com/)
+            CODE=$(curl -sL -o /dev/null -w "%{http_code}" https://www.anytimeinvoice.com/)
             if [ "$CODE" = "200" ]; then
               echo "www.anytimeinvoice.com is live (200)"
               exit 0
