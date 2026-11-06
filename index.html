@@ -5,7 +5,13 @@
   <script>
     (function () {
       try {
-        var saved = localStorage.getItem('theme');
+        // Theme is shared with the app via a cookie on .anytimeinvoice.com.au
+        // (assets/theme.js writes it); localStorage is the per-origin fallback.
+        var m = document.cookie.match(/(?:^|; )theme=(light|dark|system)/);
+        var saved = m ? m[1] : localStorage.getItem('theme');
+        if (saved === 'system') {
+          saved = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+        }
         if (saved === 'light' || saved === 'dark') {
           document.documentElement.setAttribute('data-theme', saved);
         }
